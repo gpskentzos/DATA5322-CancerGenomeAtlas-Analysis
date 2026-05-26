@@ -1,0 +1,14 @@
+# Core analysis
+pandas==2.3.2
+numpy==2.4.4
+matplotlib==3.10.6
+seaborn==0.13.2
+scikit-learn==1.8.0
+scipy==1.17.1
+
+# Notebook environment
+jupyterlab==4.4.7
+ipykernel
+
+# Matrix completion (used in notebook 03)
+fancyimpute==0.7.0
