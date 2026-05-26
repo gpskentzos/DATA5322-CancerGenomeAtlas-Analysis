@@ -1,0 +1,30 @@
+# Data files — too large for git, see data/README.md for download instructions
+data/*.csv
+data/*.tsv
+data/*.txt
+data/*.gz
+data/*.zip
+data/BC-TCGA/
+data/GSE2034/
+data/GSE25066/
+data/Simulation-Data/
+
+# Jupyter
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+venv/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
