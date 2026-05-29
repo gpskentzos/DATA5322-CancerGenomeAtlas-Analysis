@@ -9,6 +9,3 @@ scipy==1.17.1
 # Notebook environment
 jupyterlab==4.4.7
 ipykernel
-
-# Matrix completion (used in notebook 03)
-fancyimpute==0.7.0
