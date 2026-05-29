@@ -47,47 +47,43 @@ We applied four unsupervised learning methods, which are algorithms that learn s
 
 ## What We Found
 
-### Dimensionality Reduction (PCA)
+### Finding the Signal in 5,000 Dimensions: What PCA Revealed About Our Tumor Data
 
-## Finding the Signal in 5,000 Dimensions: What PCA Revealed About Our Tumor Data
-When you have 529 tumor samples and each one is described by 5,000 genes, you’re essentially staring at a 5,000-dimensional cloud of points. No human can visualize that, and most algorithms choke on the noise. To extract anything biologically meaningful, we needed a way to compress the data without throwing away the important patterns. Principal Component Analysis (PCA), powered by Singular Value Decomposition (SVD), gave us that tool. It finds the directions in the data where samples differ the most, and projects everything down to something we can actually look at and work with. 
+When you have 529 tumor samples and each one is described by 5,000 genes, you're essentially staring at a 5,000-dimensional cloud of points. No human can visualize that, and most algorithms choke on the noise. To extract anything biologically meaningful, we needed a way to compress the data without throwing away the important patterns. Principal Component Analysis (PCA), powered by Singular Value Decomposition (SVD), gave us that tool. It finds the directions in the data where samples differ the most, and projects everything down to something we can actually look at and work with.
 
-## How much signal is in those first few dimensions?
-The first sanity check is always a scree plot: a bar chart showing how much total variance each principal component (PC) captures. The first component accounted for 13.1% of the cross-sample variation, and the second captured 8.2%. After that, the curve dropped sharply and flattened into a long, quiet tail. That classic “elbow” shape tells us something important: most of the meaningful variation lives in just a handful of dimensions. The data isn’t spraying randomly in all 5,000 directions-there’s real, low-dimensional structure waiting to be uncovered.
+**How much signal is in those first few dimensions?**
 
-## Visualizing the tumors in two dimensions
-We plotted every tumor using only PC1 and PC2. The result wasn’t a formless blob. Instead, clear groupings and smooth gradients emerged organically. What makes this compelling is that the algorithm never saw a clinical label. It had no information about cancer subtypes, patient outcomes, or histology. It only saw expression values, yet the samples naturally grouped together. That was our first real confirmation that the underlying biology is strong enough to drive separation on its own.
-To be sure this wasn’t some trick of projection, we ran a simple control: we plotted the same samples using two randomly chosen genes. Unsurprisingly, that gave us a scattered, unstructured mess. Think of it like trying to recognize a complex 3D object from a bad angle. PCA solves for the exact rotation that reveals the widest, most informative silhouette. Two random genes don’t even come close.
+The first sanity check is always a scree plot: a chart showing how much total variance each principal component (PC) captures. The first component accounted for 13.1% of the cross-sample variation, and the second captured 8.2%. After that, the curve dropped sharply and flattened into a long, quiet tail. That classic elbow shape tells us something important: most of the meaningful variation lives in just a handful of dimensions. The data isn't spraying randomly in all 5,000 directions, there's real, low-dimensional structure waiting to be uncovered.
 
-## What genes drive the separation?
-PCA doesn’t just reduce dimensions-it also tells you which original features contribute most to each component. When we examined the gene loadings for PC1, the strongest contributors were MLPH and FOXA1. In the math, they were just indices in a matrix. In reality, both genes are well-established markers of estrogen receptor signaling and are routinely used to classify luminal breast cancers. Without any biological guidance, the math landed on the same genes that decades of pathology research have identified as central. That convergence between purely mathematical results and known biology gives us confidence that the structure we’re seeing is genuine.
+![Scree Plot](../plots/scree_plot.png)
 
-## How many components do we actually need?
-PC1 and PC2 are great for visualization, but they don’t tell the whole story. For downstream clustering, we asked a practical question: how many components are required to capture at least 50% of the cumulative variance? The answer turned out to be 24.
-That number is revealing. Breast cancer is often discussed in terms of four major clinical subtypes, so you might guess that three or four components would suffice. The fact that 24 are needed highlights the hidden complexity in tumor tissue. Beyond subtype identity, there are multiple independent sources of variation-immune infiltration, metabolic state, patient age, stromal content, secondary mutations-each showing up in the data in its own way. By keeping these 24 components, we reduced our feature space by more than 99% while still preserving the biological signals that matter for clustering and interpretation.
+The singular value decay plot tells the same story from a different angle. The first few singular values are substantially larger than the rest, confirming that the data has genuine low-rank structure.
 
-## The takeaway
-PCA didn’t just shrink our dataset; it confirmed that the underlying biology is strong, recoverable, and aligns with known clinical markers. The structured groups we see in PC space, the gene loadings that match established pathways, and the dimensionality needed to explain half the variance all point in the same direction: the data contains real, layered information about tumor biology, and we’re now equipped to explore it in a far more tractable form.
+![Singular Value Decay](../plots/svd_singular_values.png)
 
-# Finding the Signal in 5,000 Dimensions: What PCA Revealed About Our Tumor Data
-When you have 529 tumor samples and each one is described by 5,000 genes, you’re essentially staring at a 5,000-dimensional cloud of points. No human can visualize that, and most algorithms choke on the noise. To extract anything biologically meaningful, we needed a way to compress the data without throwing away the important patterns. Principal Component Analysis (PCA), powered by Singular Value Decomposition (SVD), gave us that tool. It finds the directions in the data where samples differ the most, and projects everything down to something we can actually look at and work with. 
+**Visualizing the tumors in two dimensions**
 
-# How much signal is in those first few dimensions?
-The first sanity check is always a scree plot: a bar chart showing how much total variance each principal component (PC) captures. The first component accounted for 13.1% of the cross-sample variation, and the second captured 8.2%. After that, the curve dropped sharply and flattened into a long, quiet tail. That classic “elbow” shape tells us something important: most of the meaningful variation lives in just a handful of dimensions. The data isn’t spraying randomly in all 5,000 directions-there’s real, low-dimensional structure waiting to be uncovered.
+We plotted every tumor using only PC1 and PC2. The result wasn't a formless blob. Instead, clear groupings and smooth gradients emerged organically. What makes this compelling is that the algorithm never saw a clinical label. It had no information about cancer subtypes, patient outcomes, or histology. It only saw expression values, yet the samples naturally grouped together. That was our first real confirmation that the underlying biology is strong enough to drive separation on its own.
 
-# Visualizing the tumors in two dimensions
-We plotted every tumor using only PC1 and PC2. The result wasn’t a formless blob. Instead, clear groupings and smooth gradients emerged organically. What makes this compelling is that the algorithm never saw a clinical label. It had no information about cancer subtypes, patient outcomes, or histology. It only saw expression values, yet the samples naturally grouped together. That was our first real confirmation that the underlying biology is strong enough to drive separation on its own.
-To be sure this wasn’t some trick of projection, we ran a simple control: we plotted the same samples using two randomly chosen genes. Unsurprisingly, that gave us a scattered, unstructured mess. Think of it like trying to recognize a complex 3D object from a bad angle. PCA solves for the exact rotation that reveals the widest, most informative silhouette. Two random genes don’t even come close.
+To be sure this wasn't some trick of projection, we ran a simple control: we plotted the same samples using two randomly chosen genes. Unsurprisingly, that gave us a scattered, unstructured mess. Think of it like trying to recognize a complex 3D object from a bad angle. PCA solves for the exact rotation that reveals the widest, most informative silhouette. Two random genes don't even come close.
 
-# What genes drive the separation?
-PCA doesn’t just reduce dimensions-it also tells you which original features contribute most to each component. When we examined the gene loadings for PC1, the strongest contributors were MLPH and FOXA1. In the math, they were just indices in a matrix. In reality, both genes are well-established markers of estrogen receptor signaling and are routinely used to classify luminal breast cancers. Without any biological guidance, the math landed on the same genes that decades of pathology research have identified as central. That convergence between purely mathematical results and known biology gives us confidence that the structure we’re seeing is genuine.
+![PC Space vs Original Feature Space](../plots/pc_vs_original.png)
 
-# How many components do we actually need?
-PC1 and PC2 are great for visualization, but they don’t tell the whole story. For downstream clustering, we asked a practical question: how many components are required to capture at least 50% of the cumulative variance? The answer turned out to be 24.
-That number is revealing. Breast cancer is often discussed in terms of four major clinical subtypes, so you might guess that three or four components would suffice. The fact that 24 are needed highlights the hidden complexity in tumor tissue. Beyond subtype identity, there are multiple independent sources of variation-immune infiltration, metabolic state, patient age, stromal content, secondary mutations-each showing up in the data in its own way. By keeping these 24 components, we reduced our feature space by more than 99% while still preserving the biological signals that matter for clustering and interpretation.
+**What genes drive the separation?**
 
-# The takeaway
-PCA didn’t just shrink our dataset; it confirmed that the underlying biology is strong, recoverable, and aligns with known clinical markers. The structured groups we see in PC space, the gene loadings that match established pathways, and the dimensionality needed to explain half the variance all point in the same direction: the data contains real, layered information about tumor biology, and we’re now equipped to explore it in a far more tractable form.
+PCA doesn't just reduce dimensions, it also tells you which original features contribute most to each component. When we examined the gene loadings for PC1, the strongest contributors were MLPH and FOXA1. In the math, they were just indices in a matrix. In reality, both genes are well-established markers of estrogen receptor signaling and are routinely used to classify luminal breast cancers. Without any biological guidance, the math landed on the same genes that decades of pathology research have identified as central. That convergence between purely mathematical results and known biology gives us confidence that the structure we're seeing is genuine.
+
+![Top Gene Loadings per PC](../plots/gene_loadings.png)
+
+**How many components do we actually need?**
+
+PC1 and PC2 are great for visualization, but they don't tell the whole story. For downstream clustering, we asked a practical question: how many components are required to capture at least 50% of the cumulative variance? The answer turned out to be 24.
+
+That number is revealing. Breast cancer is often discussed in terms of four major clinical subtypes, so you might guess that three or four components would suffice. The fact that 24 are needed highlights the hidden complexity in tumor tissue. Beyond subtype identity, there are multiple independent sources of variation, immune infiltration, metabolic state, patient age, stromal content, secondary mutations, each showing up in the data in its own way. By keeping these 24 components, we reduced our feature space by more than 99% while still preserving the biological signals that matter for clustering and interpretation.
+
+**The takeaway**
+
+PCA didn't just shrink our dataset; it confirmed that the underlying biology is strong, recoverable, and aligns with known clinical markers. The structured groups we see in PC space, the gene loadings that match established pathways, and the dimensionality needed to explain half the variance all point in the same direction: the data contains real, layered information about tumor biology, and we're now equipped to actually explore it.
 
 ---
 
@@ -101,7 +97,7 @@ To test this properly, we ran a controlled experiment. We took the clean, comple
 
 We measured how well the algorithm recovered the hidden values across a range of model complexities, expressed as a rank parameter:
 
-<!-- ![RMSE vs Rank](../plots/mc_rmse_vs_rank.png) -->
+![RMSE vs Rank](../plots/mc_rmse_vs_rank.png)
 
 The results showed a clear sweet spot. Using rank 50 produced the best recovery:
 
@@ -114,28 +110,29 @@ Going beyond rank 50 made things slightly worse. The model began fitting noise i
 
 At the optimal rank of 50, the algorithm converged in 33 iterations. The Pearson correlation between predicted and true held-out values was 0.70, indicating a meaningful but not perfect recovery, which is expected for noisy high-dimensional data.
 
-<!-- ![Convergence](../plots/mc_convergence.png) -->
-<!-- ![Recovery Heatmap](../plots/mc_recovery_heatmap.png) -->
+![Convergence](../plots/mc_convergence.png)
+
+![Recovery Heatmap](../plots/mc_recovery_heatmap.png)
 
 ---
 
 ### K-Means Clustering
 
-
 When we asked the algorithm to find four natural groupings (matching the four known subtypes), we found...
 
-<!-- ![Elbow Plot](../plots/kmeans_elbow.png) -->
-<!-- ![K-Means Clusters](../plots/kmeans_clusters_pca.png) -->
+![Elbow Plot](../plots/kmeans_elbow.png)
+
+![K-Means Clusters](../plots/kmeans_clusters_pca.png)
 
 ---
 
 ### Hierarchical Clustering
 
-
 Building a family tree of the tumor samples revealed...
 
-<!-- ![Dendrograms](../plots/dendrograms.png) -->
-<!-- ![Expression Heatmap](../plots/heatmap_hierarchical.png) -->
+![Dendrograms](../plots/dendrograms.png)
+
+![Expression Heatmap](../plots/heatmap_hierarchical.png)
 
 ---
 
@@ -161,9 +158,9 @@ This matters for a few reasons:
 
 This analysis was completed as a final project for **DATA 5322 - Statistical Machine Learning II** at Seattle University, Spring 2026.
 
-**Team:** Ruman Sidhu, Paul Skentzos, Hamda Hassan  
-**Instructor:** Dr. Ariana Mendible  
-**Code & notebooks:** [https://github.com/gpskentzos/DATA5322-CancerGenomeAtlas-Analysis ](https://github.com/gpskentzos/DATA5322-CancerGenomeAtlas-Analysis)
+**Team:** Ruman Sidhu, Paul Skentzos, Hamda Hassan
+**Instructor:** Dr. Ariana Mendible
+**Code & notebooks:** [GitHub Repository](https://github.com/gpskentzos/DATA5322-CancerGenomeAtlas-Analysis)
 
 ---
 
