@@ -159,7 +159,9 @@ This matters for a few reasons:
 This analysis was completed as a final project for **DATA 5322 - Statistical Machine Learning II** at Seattle University, Spring 2026.
 
 **Team:** Ruman Sidhu, Paul Skentzos, Hamda Hassan
+
 **Instructor:** Dr. Ariana Mendible
+
 **Code & notebooks:** [GitHub Repository](https://github.com/gpskentzos/DATA5322-CancerGenomeAtlas-Analysis)
 
 ---
