@@ -163,7 +163,7 @@ This analysis was completed as a final project for **DATA 5322 - Statistical Mac
 
 **Team:** Ruman Sidhu, Paul Skentzos, Hamda Hassan  
 **Instructor:** Dr. Ariana Mendible  
-**Code & notebooks:** [GitHub Repository](https://github.com/[YOUR-REPO-LINK])
+**Code & notebooks:** [https://github.com/gpskentzos/DATA5322-CancerGenomeAtlas-Analysis ](https://github.com/gpskentzos/DATA5322-CancerGenomeAtlas-Analysis)
 
 ---
 
