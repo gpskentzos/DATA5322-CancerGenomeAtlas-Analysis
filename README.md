@@ -56,7 +56,7 @@ The final deliverable includes a blog post written for a broad audience, with vi
 DATA5322-CancerGenomeAtlas-Analysis/
 │
 ├── data/               # Instructions for downloading the dataset
-├── notebooks/          # R Markdown analysis files
+├── notebooks/          # Python Jupyter Notebooks
 ├── plots/              # Generated visualizations
 ├── blog/               # Blog post content
 └── README.md
