@@ -28,6 +28,8 @@ This kind of structured missingness, where the pattern of what is missing carrie
 
 Before running any models, we also filtered the dataset from 17,814 genes down to the top 5,000 by how much they varied across patients. Those 5,000 genes account for 64.4% of the total variation in the dataset. The remaining 12,814 genes contribute very little signal and would mostly add noise to the analysis.
 
+We also ran a basic quality check on the 529 samples to look for any that were clearly anomalous. Using a standard statistical threshold, we flagged 2 samples with unusually low mean expression and 3 with unusually high spread. The deviations were small, suggesting natural biological variation rather than a technical problem, so all 529 samples were kept for the analysis.
+
 > **Data source:** [Kaggle: Gene Expression Profiles of Breast Cancer](https://www.kaggle.com/datasets/orvile/gene-expression-profiles-of-breast-cancer) (originally from TCGA)
 
 ---
@@ -94,6 +96,8 @@ The 1,497 missing values in the raw data raised a natural question: if the data 
 To test this properly, we ran a controlled experiment. We took the clean, complete expression matrix and deliberately hid 10% of entries, about 264,000 values chosen at random. We then applied Iterative SVD Completion, an algorithm that exploits the structure of the data to predict what those hidden values should be.
 
 **Why does this work?** The 529 patients in this dataset do not vary independently across 5,000 genes. Patients with similar overall expression profiles tend to show correlated patterns across many genes at once. This creates redundancy in the data matrix: a relatively small number of underlying patterns explain most of what we observe. Once the algorithm learns those patterns from the observed entries, it can predict the missing ones.
+
+We first verified this low-rank structure before attempting any recovery. The singular value spectrum of the expression matrix decays sharply: just 2 components capture 25% of total spectral energy, 8 components capture 50%, and 32 components capture 75%. Out of 5,000 possible dimensions, a handful contain most of the signal. That concentration is precisely what makes the recovery possible.
 
 We measured how well the algorithm recovered the hidden values across a range of model complexities, expressed as a rank parameter:
 
