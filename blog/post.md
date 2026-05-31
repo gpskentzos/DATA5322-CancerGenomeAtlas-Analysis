@@ -150,7 +150,7 @@ PCA didn't just reduce dimensions - it found signal. The top gene loadings for P
 
 Matrix Completion verified that the data has genuine low-rank structure - a relatively small number of underlying biological patterns explain most of what we observe. This is exactly what you'd expect from a disease where a handful of molecular subtypes drive most of the variation. The algorithm wasn't just interpolating gaps; it was learning the hidden architecture of the data.
 
-K-Means Clustering partitioned 529 tumors into four natural groups. When those groups were compared against known clinical labels, the alignment was striking. The mathematical clusters corresponded to Luminal A, Luminal B, HER2-enriched, and Triple-Negative - the same four subtypes that oncologists painstakingly characterized over decades of research.
+K-Means Clustering partitioned 529 tumors into four natural groups. When those groups were compared against known clinical labels, the alignment was striking. The mathematical clusters were consistent with the four known subtypes - Luminal A, Luminal B, HER2-enriched, and Triple-Negative, the same groups that oncologists painstakingly characterized over decades of research.
 
 Hierarchical Clustering built a family tree of tumor relationships. The dendrogram didn't just produce the same four groups - it revealed their internal structure and relative distances. Some subtypes are more alike; others are more distinct. The tree reflects real biological relationships, not arbitrary cuts.
 
