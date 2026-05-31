@@ -144,12 +144,17 @@ Building a family tree of the tumor samples revealed...
 
 We started with a single question and honestly a little skepticism: can an algorithm, given only numbers, find what oncologists took decades to discover?
 
-Four methods. One dataset. No labels.
+**Four methods**. One dataset. No labels.
 
 PCA didn't just reduce dimensions - it found signal. The top gene loadings for PC1 were MLPH and FOXA1: not arbitrary mathematical artifacts, but well-established estrogen receptor markers that pathologists use to classify luminal breast cancers. The algorithm had no way to know this. It only followed the variance. And the variance led it straight to the biology.
+
 Matrix Completion verified that the data has genuine low-rank structure - a relatively small number of underlying biological patterns explain most of what we observe. This is exactly what you'd expect from a disease where a handful of molecular subtypes drive most of the variation. The algorithm wasn't just interpolating gaps; it was learning the hidden architecture of the data.
+
 K-Means Clustering partitioned 529 tumors into four natural groups. When those groups were compared against known clinical labels, the alignment was striking. The mathematical clusters corresponded to Luminal A, Luminal B, HER2-enriched, and Triple-Negative - the same four subtypes that oncologists painstakingly characterized over decades of research.
+
 Hierarchical Clustering built a family tree of tumor relationships. The dendrogram didn't just produce the same four groups - it revealed their internal structure and relative distances. Some subtypes are more alike; others are more distinct. The tree reflects real biological relationships, not arbitrary cuts.
+
+
 Here is what makes the convergence remarkable: these are four completely different mathematical approaches. K-means imposes round clusters in metric space. Hierarchical clustering builds a dendrogram from pairwise distances. PCA finds the axes of maximum variance through linear projections. Matrix Completion recovers structure from incomplete data using low-rank approximations. They don't share assumptions, optimization objectives, or even the kind of answer they return.
 
 And yet, they all tell the same story.
@@ -178,9 +183,12 @@ This analysis was completed as a final project for **DATA 5322 - Statistical Mac
 
 **Team:** Ruman Sidhu, Paul Skentzos, Hamda Hassan
 
+
 **Instructor:** Dr. Ariana Mendible
 
+
 **Code & notebooks:** [GitHub Repository](https://github.com/gpskentzos/DATA5322-CancerGenomeAtlas-Analysis)
+
 
 ---
 
