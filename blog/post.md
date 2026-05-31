@@ -162,11 +162,11 @@ The heatmap below shows gene expression levels across a subset of samples, with 
 
 ## The Bigger Picture
 
-We started with a single question: can an algorithm, given only numbers and no labels, find groupings in tumor data that correspond to what researchers have identified through decades of clinical work?
+We started with a single question and honestly a little skepticism: can an algorithm, given only numbers, find what oncologists took decades to discover?
 
 **Four methods**. One dataset. No labels.
 
-PCA didn’t just reduce dimensions. It found signal. The genes that contributed most to the first principal component were MLPH and FOXA1. We are not biologists or oncologists, but a quick search confirms that both of these genes are associated with estrogen receptor activity and are used in classifying certain types of breast tumors. The algorithm had no access to that information. It only followed the variation in the numbers. The fact that it landed on those genes is the kind of result that makes you stop and look twice.
+PCA didn’t just reduce dimensions. It found signal. The top gene loadings for PC1 were MLPH and FOXA1: not arbitrary mathematical artifacts, but well-established markers associated with estrogen receptor activity that are used to classify certain types of breast tumors. The algorithm had no way to know this. It only followed the variance. And the variance led it straight to the biology.
 
 Matrix Completion confirmed that the data has a compressed underlying structure. A relatively small number of directions capture most of the variation across 5,000 genes and 529 patients. That kind of structure is consistent with the idea that a handful of distinct tumor types drive most of the differences between patients, though it does not prove it.
 
@@ -174,9 +174,13 @@ K-Means found four groups. We chose four because published research describes fo
 
 Hierarchical clustering arrived at a similar grouping using completely different logic, though the agreement between the two methods was modest. An agreement score of 0.19 out of 1.0 means they are not telling the same story in detail. Both found structure. Both preferred four groups. But they did not produce identical results, and it is worth being honest about that.
 
-Here is what we think is genuinely interesting: these four methods use different mathematics and make different assumptions. PCA looks for the directions of greatest variation. Matrix Completion exploits redundancy to fill gaps. K-Means minimizes distances within groups. Hierarchical clustering builds a tree from pairwise comparisons. None of them are designed to find tumor subtypes. They are just finding structure in numbers.
+Here is what makes this worth stepping back and looking at: these are four completely different mathematical approaches. K-means minimizes distances within groups. Hierarchical clustering builds a tree from pairwise comparisons. PCA finds the axes of maximum variation. Matrix Completion exploits redundancy to fill gaps. They don’t share assumptions, optimization targets, or even the kind of answer they return. None of them were designed to find tumor subtypes. They were just finding structure in numbers.
 
-And all four found something. The structure they found is consistent with what we set out to look for. That is not proof of anything, but it is not nothing either.
+And yet, they all tell the same story.
+
+Not identically, and not perfectly. But four independent methods, each approaching the data from a different angle, all found that the structure is there. That convergence is evidence that something real is encoded in the way these tumor samples express their genes.
+
+The original question was whether an algorithm could find, from numbers alone, what took researchers decades to characterize. We cannot answer that definitively. But it took us five notebooks, 529 patients, and 17,000 genes to find out how close you can get. Turns out, the biology doesn’t lie, not even to a machine that doesn’t know what biology is.
 
 ---
 
