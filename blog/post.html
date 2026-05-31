@@ -451,6 +451,52 @@ the four known subtypes), we found…</p>
 </figure>
 <hr />
 <h2 id="the-bigger-picture">The Bigger Picture</h2>
+<p>We started with a single question and honestly a little skepticism:
+can an algorithm, given only numbers, find what oncologists took decades
+to discover?</p>
+<p>Four methods. One dataset. No labels.</p>
+<p><strong>PCA</strong> didn't just reduce dimensions, it found signal.
+The top gene loadings for PC1 were MLPH and FOXA1: not arbitrary
+mathematical artifacts, but well-established estrogen receptor markers
+that pathologists use to classify luminal breast cancers. The algorithm
+had no way to know this. It only followed the variance. And the variance
+led it straight to the biology.</p>
+<p><strong>Matrix Completion</strong> verified that the data has genuine
+low-rank structure - a relatively small number of underlying biological
+patterns explain most of what we observe. This is exactly what you'd
+expect from a disease where a handful of molecular subtypes drive most
+of the variation. The algorithm wasn't just interpolating gaps; it was
+learning the hidden architecture of the data.</p>
+<p><strong>K-Means Clustering</strong> partitioned 529 tumors into four
+natural groups. When those groups were compared against known clinical
+labels, the alignment was striking. The mathematical clusters
+corresponded to Luminal A, Luminal B, HER2-enriched, and
+Triple-Negative - the same four subtypes that oncologists painstakingly
+characterized over decades of research.</p>
+<p><strong>Hierarchical Clustering</strong> built a family tree of tumor
+relationships. The dendrogram didn't just produce the same four groups,
+it revealed their internal structure and relative distances. Some
+subtypes are more alike; others are more distinct. The tree reflects
+real biological relationships, not arbitrary cuts.</p>
+<p>Here is what makes the convergence remarkable: these are four
+completely different mathematical approaches. K-means imposes round
+clusters in metric space. Hierarchical clustering builds a dendrogram
+from pairwise distances. PCA finds the axes of maximum variance through
+linear projections. Matrix Completion recovers structure from incomplete
+data using low-rank approximations. They don't share assumptions,
+optimization objectives, or even the kind of answer they return.</p>
+<p>And yet, they all tell the same story.</p>
+<p>When four independent algorithms, using different mathematics and
+different assumptions, independently recover the same underlying
+structure, one that matches what clinical research found through a
+completely different route, that convergence is not a coincidence. It
+is evidence that the structure is genuinely there, encoded deeply in the
+biology of how these tumors express their genes.</p>
+<p>The original question was whether an algorithm could rediscover what
+oncologists took decades to find. The answer is yes, and it took us
+five notebooks, 529 patients, and 17,000 genes to show it. Turns out,
+the biology doesn't lie - not even to a machine that doesn't know what
+biology is.</p>
 <hr />
 <h2 id="what-this-means">What This Means</h2>
 <p>This project is a proof of concept for something significant: the
